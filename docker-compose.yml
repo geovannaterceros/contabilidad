@@ -1,0 +1,25 @@
+﻿version: '3.0'
+
+services:
+
+   api:
+        build:
+          context: .
+          dockerfile: Dockerfile
+        ports:
+          - "8080:80"
+        depends_on:
+          - db
+   db:
+     image: mysql:5.7
+     environment:
+       MYSQL_RANDOM_ROOT_PASSWORD: 1
+       MYSQL_DATABASE: testDB
+       MYSQL_USER: sqladmin
+       MYSQL_PASSWORD: sa2022*
+     volumes:
+       - dbdata:/var/lib/mysql
+       - ./_MySQL_Init_Script:/docker-entrypoint-initdb.d
+     restart: always
+volumes:
+    dbdata:
